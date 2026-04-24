@@ -57,7 +57,7 @@ jobs:
           context: ./http-server
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp1-httpd:latest
-deploy:
+  deploy:
     needs: build-and-push-docker-image
     runs-on: ubuntu-24.04
     steps:
