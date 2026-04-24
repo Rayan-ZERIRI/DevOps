@@ -60,6 +60,7 @@ jobs:
   deploy:
     needs: build-and-push-docker-image
     runs-on: ubuntu-24.04
+    environment: prod
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
