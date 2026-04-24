@@ -1,0 +1,10 @@
+- name: Launch proxy
+  docker_container:
+    name: httpd
+    image: rayanzeriri/tp1-httpd:latest
+    ports:
+      - "80:80"
+    networks:
+      - name: my-network
+  environment:
+    ansible_python_interpreter: /opt/docker_venv/bin/python

@@ -57,3 +57,23 @@ jobs:
           context: ./http-server
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp1-httpd:latest
+deploy:
+    needs: build-and-push-docker-image
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Ansible
+        run: pip install ansible
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 400 ~/.ssh/id_rsa
+
+      - name: Run Ansible playbook
+        run: ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: "false"
